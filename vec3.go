@@ -8,7 +8,7 @@ type Vec3 struct {
 	z float64
 }
 
-func add(u Vec3, v Vec3) Vec3 {
+func Add(u Vec3, v Vec3) Vec3 {
 	return Vec3{
 		x: u.x + v.x,
 		y: u.y + v.y,
@@ -16,7 +16,7 @@ func add(u Vec3, v Vec3) Vec3 {
 	}
 }
 
-func sub(u Vec3, v Vec3) Vec3 {
+func Sub(u Vec3, v Vec3) Vec3 {
 	return Vec3{
 		x: u.x - v.x,
 		y: u.y - v.y,
@@ -24,7 +24,7 @@ func sub(u Vec3, v Vec3) Vec3 {
 	}
 }
 
-func mul(u Vec3, v Vec3) Vec3 {
+func Mul(u Vec3, v Vec3) Vec3 {
 	return Vec3{
 		x: u.x * v.x,
 		y: u.y * v.y,
@@ -32,7 +32,7 @@ func mul(u Vec3, v Vec3) Vec3 {
 	}
 }
 
-func times(u Vec3, t float64) Vec3 {
+func Times(u Vec3, t float64) Vec3 {
 	return Vec3{
 		x: u.x * t,
 		y: u.x * t,
@@ -40,7 +40,7 @@ func times(u Vec3, t float64) Vec3 {
 	}
 }
 
-func div(u Vec3, t float64) Vec3 {
+func Div(u Vec3, t float64) Vec3 {
 	return Vec3{
 		x: u.x / t,
 		y: u.y / t,
@@ -48,10 +48,10 @@ func div(u Vec3, t float64) Vec3 {
 	}
 }
 
-func (v Vec3) length() float64 {
-	return math.Sqrt(v.length_squared())
+func (v Vec3) Length() float64 {
+	return math.Sqrt(v.Length_squared())
 }
 
-func (v Vec3) length_squared() float64 {
+func (v Vec3) Length_squared() float64 {
 	return v.x*v.x + v.y*v.y + v.z*v.z
 }
