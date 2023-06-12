@@ -49,9 +49,13 @@ func Div(u Vec3, t float64) Vec3 {
 }
 
 func (v Vec3) Length() float64 {
-	return math.Sqrt(v.Length_squared())
+	return math.Sqrt(v.LengthSquared())
 }
 
-func (v Vec3) Length_squared() float64 {
+func (v Vec3) LengthSquared() float64 {
 	return v.x*v.x + v.y*v.y + v.z*v.z
+}
+
+func (v Vec3) UnitVector() Vec3 {
+	return Div(v, v.Length())
 }
