@@ -10,13 +10,17 @@ func main() {
 
 	fmt.Printf("P3\n%d %d \n255\n", image_width, image_height)
 
+	buf := ""
+
 	for j := image_height - 1; j >= 0; j-- {
 		for i := 0; i < image_width; i++ {
-			var r = float64(i) / (image_width - 1)
-			var g = float64(j) / (image_height - 1)
-			var b = 0.25
+			r := float64(i) / (image_width - 1)
+			g := float64(j) / (image_height - 1)
+			b := 0.25
 
-			fmt.Printf("%d %d %d\n", int(255.999*r), int(255.999*g), int(255.999*b))
+			c := Vec3{x: r, y: g, z: b}
+			buf += WriteColor(c)
+			fmt.Println(buf)
 		}
 	}
 }
