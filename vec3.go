@@ -2,6 +2,9 @@ package main
 
 import "math"
 
+type Color = Vec3
+type Point = Vec3
+
 type Vec3 struct {
 	x float64
 	y float64
