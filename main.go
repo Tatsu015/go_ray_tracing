@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/Tatsu015/go_ray_tracing.git/ppm"
+	"github.com/Tatsu015/go_ray_tracing.git/vec"
 )
 
 func main() {
@@ -18,8 +21,8 @@ func main() {
 			g := float64(j) / (image_height - 1)
 			b := 0.25
 
-			c := Vec3{x: r, y: g, z: b}
-			buf += WriteColor(c)
+			c := vec.NewVec3(r, g, b)
+			buf += ppm.WriteColor(c)
 			fmt.Println(buf)
 		}
 	}
