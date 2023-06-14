@@ -15,7 +15,7 @@ func NewVec3(x float64, y float64, z float64) Vec3 {
 	return Vec3{x, y, z}
 }
 
-func Add(u Vec3, v Vec3) Vec3 {
+func (v Vec3) Add(u Vec3) Vec3 {
 	return Vec3{
 		X: u.X + v.X,
 		Y: u.Y + v.Y,
@@ -23,15 +23,15 @@ func Add(u Vec3, v Vec3) Vec3 {
 	}
 }
 
-func Sub(u Vec3, v Vec3) Vec3 {
+func (v Vec3) Sub(u Vec3) Vec3 {
 	return Vec3{
-		X: u.X - v.X,
-		Y: u.Y - v.Y,
-		Z: u.Z - v.Z,
+		X: v.X - u.X,
+		Y: v.Y - u.Y,
+		Z: v.Z - u.Z,
 	}
 }
 
-func Mul(u Vec3, v Vec3) Vec3 {
+func (v Vec3) Mul(u Vec3) Vec3 {
 	return Vec3{
 		X: u.X * v.X,
 		Y: u.Y * v.Y,
@@ -39,19 +39,19 @@ func Mul(u Vec3, v Vec3) Vec3 {
 	}
 }
 
-func Times(u Vec3, t float64) Vec3 {
+func (v Vec3) Times(t float64) Vec3 {
 	return Vec3{
-		X: u.X * t,
-		Y: u.X * t,
-		Z: u.X * t,
+		X: v.X * t,
+		Y: v.X * t,
+		Z: v.X * t,
 	}
 }
 
-func Div(u Vec3, t float64) Vec3 {
+func (v Vec3) Div(t float64) Vec3 {
 	return Vec3{
-		X: u.X / t,
-		Y: u.Y / t,
-		Z: u.Z / t,
+		X: v.X / t,
+		Y: v.Y / t,
+		Z: v.Z / t,
 	}
 }
 
@@ -64,5 +64,5 @@ func (v Vec3) LengthSquared() float64 {
 }
 
 func (v Vec3) UnitVector() Vec3 {
-	return Div(v, v.Length())
+	return v.Div(v.Length())
 }
