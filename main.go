@@ -5,8 +5,18 @@ import (
 	"os"
 
 	"github.com/Tatsu015/go_ray_tracing.git/ppm"
+	"github.com/Tatsu015/go_ray_tracing.git/raytrace"
 	"github.com/Tatsu015/go_ray_tracing.git/vec"
 )
+
+var WHITE = vec.NewVec3(1, 1, 1)
+var BLUE = vec.NewVec3(0.5, 0.7, 1)
+
+func rayColor(r *raytrace.Ray) vec.Vec3 {
+	ud := r.Direction.UnitVector()
+	t := 0.5 * (ud.Y + 1)
+	return vec.Add(vec.Times(WHITE, (1-t)), vec.Times(BLUE, t))
+}
 
 func main() {
 	const image_width = 256
