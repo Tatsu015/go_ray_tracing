@@ -12,5 +12,5 @@ func NewRay(origin vec.Vec3, direction vec.Vec3) Ray {
 }
 
 func (r *Ray) At(t float64) vec.Point {
-	return vec.Add(r.Origin, vec.Times(r.Direction, t))
+	return r.Origin.Add((r.Direction.Times(t)))
 }
