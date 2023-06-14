@@ -15,12 +15,22 @@ var BLUE = vec.NewVec3(0.5, 0.7, 1)
 func rayColor(r *raytrace.Ray) vec.Vec3 {
 	ud := r.Direction.UnitVector()
 	t := 0.5 * (ud.Y + 1)
-	return vec.Add(vec.Times(WHITE, (1-t)), vec.Times(BLUE, t))
+	return WHITE.Times(1 - t).Add(BLUE.Times(t))
 }
 
 func main() {
-	const image_width = 256
-	const image_height = 256
+	const ASPECT_RATIO = 16.0 / 9.0
+	var image_width = 100
+	var image_height = int(float64(image_width) / ASPECT_RATIO)
+	viewport_height := 2.0
+	viewport_width := ASPECT_RATIO * viewport_height
+	focal_length := 1.0
+
+	origin := vec.NewVec3(0, 0, 0)
+	horizontal := vec.NewVec3(viewport_width, 0, 0)
+	vertival := vec.NewVec3(0, viewport_height, 0)
+	focal_pos := vec.NewVec3(0, 0, focal_length)
+	lower_left_corner := origin.Sub(horizontal.Times(0.5)).Sub(vertival.Times(0.5)).Sub(focal_pos)
 
 	fmt.Printf("P3\n%d %d \n255\n", image_width, image_height)
 
@@ -29,11 +39,13 @@ func main() {
 	for j := image_height - 1; j >= 0; j-- {
 		fmt.Fprintf(os.Stderr, "\rScanlines remaining: %3d", j)
 		for i := 0; i < image_width; i++ {
-			r := float64(i) / (image_width - 1)
-			g := float64(j) / (image_height - 1)
-			b := 0.25
+			u := float64(i) / float64(image_width-1)
+			v := float64(j) / float64(image_height-1)
 
-			c := vec.NewVec3(r, g, b)
+			d := lower_left_corner.Add(horizontal.Times(u)).Add(vertival.Times(v)).Sub(origin)
+			r := raytrace.NewRay(origin, d)
+
+			c := rayColor(&r)
 			buf += ppm.WriteColor(c)
 		}
 	}
