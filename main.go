@@ -23,7 +23,7 @@ func main() {
 
 			c := vec.NewVec3(r, g, b)
 			buf += ppm.WriteColor(c)
-			fmt.Println(buf)
 		}
 	}
+	fmt.Println(buf)
 }
