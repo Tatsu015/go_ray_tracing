@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/Tatsu015/go_ray_tracing.git/ppm"
 	"github.com/Tatsu015/go_ray_tracing.git/vec"
@@ -16,6 +17,7 @@ func main() {
 	buf := ""
 
 	for j := image_height - 1; j >= 0; j-- {
+		fmt.Fprintf(os.Stderr, "\rScanlines remaining: %3d", j)
 		for i := 0; i < image_width; i++ {
 			r := float64(i) / (image_width - 1)
 			g := float64(j) / (image_height - 1)
@@ -26,4 +28,5 @@ func main() {
 		}
 	}
 	fmt.Println(buf)
+	fmt.Fprintf(os.Stderr, "\033[2K\rDone!\n")
 }
