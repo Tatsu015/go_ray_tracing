@@ -42,8 +42,8 @@ func (v Vec3) Mul(u Vec3) Vec3 {
 func (v Vec3) Times(t float64) Vec3 {
 	return Vec3{
 		X: v.X * t,
-		Y: v.X * t,
-		Z: v.X * t,
+		Y: v.Y * t,
+		Z: v.Z * t,
 	}
 }
 
