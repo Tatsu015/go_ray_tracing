@@ -12,6 +12,10 @@ import (
 var WHITE = vec.NewVec3(1, 1, 1)
 var BLUE = vec.NewVec3(0.5, 0.7, 1)
 
+func hitSphere(center *vec.Point, radius float64, ray *raytrace.Ray) bool {
+	return true
+}
+
 func rayColor(r *raytrace.Ray) vec.Vec3 {
 	ud := &r.Direction
 	t := 0.5 * (ud.Y + 1)
