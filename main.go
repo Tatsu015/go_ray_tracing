@@ -13,10 +13,19 @@ var WHITE = vec.NewVec3(1, 1, 1)
 var BLUE = vec.NewVec3(0.5, 0.7, 1)
 
 func hitSphere(center *vec.Point, radius float64, ray *raytrace.Ray) bool {
-	return true
+	oc := ray.Origin.Sub(*center)
+	a := ray.Direction.Dot(ray.Direction)
+	b := oc.Dot(ray.Direction)
+	c := oc.Dot(oc) - radius*radius
+	d := b*b - a*c
+	return d > 0
 }
 
 func rayColor(r *raytrace.Ray) vec.Vec3 {
+	center := vec.NewVec3(0, 0, -1)
+	if hitSphere(&center, 0.5, r) {
+		return vec.NewVec3(1, 0, 0)
+	}
 	ud := &r.Direction
 	t := 0.5 * (ud.Y + 1)
 	return WHITE.Times(1 - t).Add(BLUE.Times(t))

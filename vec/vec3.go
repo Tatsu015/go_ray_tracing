@@ -55,6 +55,10 @@ func (v Vec3) Div(t float64) Vec3 {
 	}
 }
 
+func (v Vec3) Dot(u Vec3) float64 {
+	return v.X*u.X + v.Y*u.Y + v.Z*u.Z
+}
+
 func (v Vec3) Length() float64 {
 	return math.Sqrt(v.LengthSquared())
 }
