@@ -11,6 +11,10 @@ type HitRecord struct {
 	t      float64
 }
 
+func NewHitRecord(p vec.Point, normal vec.Vec3, t float64) HitRecord {
+	return HitRecord{p, normal, t}
+}
+
 type Hittable interface {
-	Hit(ray *raytrace.Ray, tMin float64, tMax float64) (bool, HitRecord)
+	Hit(ray *raytrace.Ray, tMin float64, tMax float64) *HitRecord
 }
