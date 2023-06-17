@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"os"
 
 	"github.com/Tatsu015/go_ray_tracing.git/ppm"
@@ -12,22 +13,28 @@ import (
 var WHITE = vec.NewVec3(1, 1, 1)
 var BLUE = vec.NewVec3(0.5, 0.7, 1)
 
-func hitSphere(center *vec.Point, radius float64, ray *raytrace.Ray) bool {
+func hitSphere(center *vec.Point, radius float64, ray *raytrace.Ray) float64 {
 	oc := ray.Origin.Sub(*center)
 	a := ray.Direction.Dot(ray.Direction)
 	b := oc.Dot(ray.Direction)
 	c := oc.Dot(oc) - radius*radius
 	d := b*b - a*c
-	return d > 0
+	if d < 0 {
+		return -1
+	} else {
+		return (-b - math.Sqrt(d)) / a
+	}
 }
 
 func rayColor(r *raytrace.Ray) vec.Vec3 {
 	center := vec.NewVec3(0, 0, -1)
-	if hitSphere(&center, 0.5, r) {
-		return vec.NewVec3(1, 0, 0)
+	t := hitSphere(&center, 0.5, r)
+	if t > 0 {
+		n := r.At(t).Sub(center)
+		return vec.NewVec3(n.X+1, n.Y+1, n.Z+1).Times(0.5)
 	}
 	ud := &r.Direction
-	t := 0.5 * (ud.Y + 1)
+	t = 0.5 * (ud.Y + 1)
 	return WHITE.Times(1 - t).Add(BLUE.Times(t))
 }
 
@@ -53,7 +60,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "\rScanlines remaining: %3d", j)
 		for i := 0; i < image_width; i++ {
 			u := float64(i) / float64(image_width-1)
-			v := float64(j) / float64(image_height)
+			v := float64(j) / float64(image_height-1)
 
 			d := lower_left_corner.Add(horizontal.Times(u)).Add(vertival.Times(v)).Sub(origin)
 			r := raytrace.NewRay(origin, d)
