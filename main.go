@@ -30,7 +30,7 @@ func rayColor(r *raytrace.Ray) vec.Vec3 {
 	center := vec.NewVec3(0, 0, -1)
 	t := hitSphere(&center, 0.5, r)
 	if t > 0 {
-		n := r.At(t).Sub(center)
+		n := r.At(t).Sub(center).UnitVector()
 		return vec.NewVec3(n.X+1, n.Y+1, n.Z+1).Times(0.5)
 	}
 	ud := &r.Direction
