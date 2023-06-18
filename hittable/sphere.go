@@ -31,13 +31,17 @@ func (s *Sphere) Hit(ray *raytrace.Ray, tMin float64, tMax float64) *HitRecord {
 		t := (-b - root) / a
 		if t < tMax && tMin < t {
 			p := ray.At(t)
-			r := NewHitRecord(p, p.Sub(s.center).UnitVector(), t)
+			outwardNormal := p.Sub(s.center).UnitVector()
+			isFrontFace := isFrontFace(ray, outwardNormal)
+			r := NewHitRecord(p, p.Sub(s.center).UnitVector(), t, isFrontFace)
 			return &r
 		}
 		t = (-b + root) / a
 		if t < tMax && tMin < t {
 			p := ray.At(t)
-			r := NewHitRecord(p, p.Sub(s.center).UnitVector(), t)
+			outwardNormal := p.Sub(s.center).UnitVector()
+			isFrontFace := isFrontFace(ray, outwardNormal)
+			r := NewHitRecord(p, p.Sub(s.center).UnitVector(), t, isFrontFace)
 			return &r
 		}
 	}
