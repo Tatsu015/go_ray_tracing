@@ -12,6 +12,10 @@ type HitRecord struct {
 	frontFace bool
 }
 
+func DefaultHitRecord() HitRecord {
+	return HitRecord{vec.NewVec3(0, 0, 0), vec.NewVec3(0, 0, 0), 0, false}
+}
+
 func NewHitRecord(p vec.Point, normal vec.Vec3, t float64, frontFace bool) HitRecord {
 	return HitRecord{p, normal, t, frontFace}
 }
