@@ -27,3 +27,8 @@ func NewCamera(aspectRatio float64) Camera {
 		vertival,
 	}
 }
+
+func (c *Camera) GetRay(u float64, v float64) Ray {
+	d := c.lowerLeftCorner.Add(c.horizontal.Times(u)).Add(c.vertical.Times(v)).Sub(c.origin)
+	return NewRay(c.origin, d)
+}

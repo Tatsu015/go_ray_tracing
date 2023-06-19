@@ -30,15 +30,7 @@ func main() {
 	const ASPECT_RATIO = 16.0 / 9.0
 	var image_width = 100
 	var image_height = int(float64(image_width) / ASPECT_RATIO)
-	viewport_height := 2.0
-	viewport_width := ASPECT_RATIO * viewport_height
-	focal_length := 1.0
-
-	origin := vec.NewVec3(0, 0, 0)
-	horizontal := vec.NewVec3(viewport_width, 0, 0)
-	vertival := vec.NewVec3(0, viewport_height, 0)
-	focal_pos := vec.NewVec3(0, 0, focal_length)
-	lower_left_corner := origin.Sub(horizontal.Times(0.5)).Sub(vertival.Times(0.5)).Sub(focal_pos)
+	camera := raytrace.NewCamera(ASPECT_RATIO)
 
 	fmt.Printf("P3\n%d %d \n255\n", image_width, image_height)
 
@@ -57,8 +49,7 @@ func main() {
 			u := float64(i) / float64(image_width-1)
 			v := float64(j) / float64(image_height-1)
 
-			d := lower_left_corner.Add(horizontal.Times(u)).Add(vertival.Times(v)).Sub(origin)
-			r := raytrace.NewRay(origin, d)
+			r := camera.GetRay(u, v)
 
 			c := rayColor(&r, &world)
 			buf += ppm.WriteColor(c)
