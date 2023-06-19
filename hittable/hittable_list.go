@@ -6,6 +6,10 @@ type HittableList struct {
 	hittables []Hittable
 }
 
+func NewHittableList() HittableList {
+	return HittableList{}
+}
+
 func (h *HittableList) Add(hittable Hittable) {
 	h.hittables = append(h.hittables, hittable)
 }
