@@ -16,7 +16,7 @@ func (h *HittableList) Add(hittable Hittable) {
 
 func (h *HittableList) Hit(ray *raytrace.Ray, tMin float64, tMax float64) *HitRecord {
 	closeSoFar := tMax
-	hitRecord := new(HitRecord)
+	var hitRecord *HitRecord = nil
 
 	for _, v := range h.hittables {
 		rec := v.Hit(ray, tMin, closeSoFar)
