@@ -8,6 +8,7 @@ import (
 	"github.com/Tatsu015/go_ray_tracing.git/hittable"
 	"github.com/Tatsu015/go_ray_tracing.git/ppm"
 	"github.com/Tatsu015/go_ray_tracing.git/raytrace"
+	"github.com/Tatsu015/go_ray_tracing.git/rtmath"
 	"github.com/Tatsu015/go_ray_tracing.git/vec"
 )
 
@@ -27,6 +28,7 @@ func rayColor(ray *raytrace.Ray, world *hittable.HittableList) vec.Vec3 {
 }
 
 func main() {
+	const SAMPLE_PER_PIXCEL = 100
 	const ASPECT_RATIO = 16.0 / 9.0
 	var image_width = 100
 	var image_height = int(float64(image_width) / ASPECT_RATIO)
@@ -46,13 +48,17 @@ func main() {
 		world.Add(&h2)
 
 		for i := 0; i < image_width; i++ {
-			u := float64(i) / float64(image_width-1)
-			v := float64(j) / float64(image_height-1)
+			sum := vec.NewVec3(0, 0, 0)
+			for k := 0; k < SAMPLE_PER_PIXCEL; k++ {
+				u := (float64(i) + rtmath.RandomDouble()) / float64(image_width-1)
+				v := (float64(j) + rtmath.RandomDouble()) / float64(image_height-1)
 
-			r := camera.GetRay(u, v)
+				r := camera.GetRay(u, v)
 
-			c := rayColor(&r, &world)
-			buf += ppm.WriteColor(c)
+				c := rayColor(&r, &world)
+				sum = sum.Add(c)
+			}
+			buf += ppm.WriteColor(sum, SAMPLE_PER_PIXCEL)
 		}
 	}
 	fmt.Println(buf)

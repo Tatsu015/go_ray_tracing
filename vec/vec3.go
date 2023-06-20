@@ -2,8 +2,6 @@ package vec
 
 import (
 	"math"
-	"math/rand"
-	"time"
 
 	"github.com/Tatsu015/go_ray_tracing.git/rtmath"
 )
@@ -22,9 +20,7 @@ func NewVec3(x float64, y float64, z float64) Vec3 {
 }
 
 func RandomVec3() Vec3 {
-	seed := time.Now().UnixNano()
-	rand.Seed(seed)
-	return NewVec3(rand.Float64(), rand.Float64(), rand.Float64())
+	return NewVec3(rtmath.RandomDouble(), rtmath.RandomDouble(), rtmath.RandomDouble())
 }
 
 // func RandomInUnitSphere() Vec3 {
