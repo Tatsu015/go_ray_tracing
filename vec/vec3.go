@@ -1,6 +1,10 @@
 package vec
 
-import "math"
+import (
+	"math"
+	"math/rand"
+	"time"
+)
 
 type Color = Vec3
 type Point = Vec3
@@ -14,6 +18,18 @@ type Vec3 struct {
 func NewVec3(x float64, y float64, z float64) Vec3 {
 	return Vec3{x, y, z}
 }
+
+func RandomVec3() Vec3 {
+	seed := time.Now().UnixNano()
+	rand.Seed(seed)
+	return NewVec3(rand.Float64(), rand.Float64(), rand.Float64())
+}
+
+// func RandomInUnitSphere() Vec3 {
+// 	for {
+
+// 	}
+// }
 
 func (v Vec3) Add(u Vec3) Vec3 {
 	return Vec3{
