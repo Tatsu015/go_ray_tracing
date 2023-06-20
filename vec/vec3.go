@@ -4,6 +4,8 @@ import (
 	"math"
 	"math/rand"
 	"time"
+
+	"github.com/Tatsu015/go_ray_tracing.git/rtmath"
 )
 
 type Color = Vec3
@@ -68,6 +70,14 @@ func (v Vec3) Div(t float64) Vec3 {
 		X: v.X / t,
 		Y: v.Y / t,
 		Z: v.Z / t,
+	}
+}
+
+func (v Vec3) Clamp(min float64, max float64) Vec3 {
+	return Vec3{
+		X: rtmath.Clamp(v.X, min, max),
+		Y: rtmath.Clamp(v.Y, min, max),
+		Z: rtmath.Clamp(v.Z, min, max),
 	}
 }
 
