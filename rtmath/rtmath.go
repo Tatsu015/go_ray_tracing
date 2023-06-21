@@ -25,3 +25,9 @@ func RandomDouble() float64 {
 	rand.Seed(seed)
 	return rand.Float64()
 }
+
+func RandomDoubleInRange(min float64, max float64) float64 {
+	seed := time.Now().UnixNano()
+	rand.Seed(seed)
+	return rand.Float64()*(max-min) + min
+}

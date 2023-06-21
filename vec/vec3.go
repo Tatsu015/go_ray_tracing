@@ -23,11 +23,18 @@ func RandomVec3() Vec3 {
 	return NewVec3(rtmath.RandomDouble(), rtmath.RandomDouble(), rtmath.RandomDouble())
 }
 
-// func RandomInUnitSphere() Vec3 {
-// 	for {
+func RandomVec3Inrange(min float64, max float64) Vec3 {
+	return NewVec3(rtmath.RandomDoubleInRange(min, max), rtmath.RandomDoubleInRange(min, max), rtmath.RandomDoubleInRange(min, max))
+}
 
-// 	}
-// }
+func RandomInUnitSphere() Vec3 {
+	for {
+		p := RandomVec3Inrange(-1, 1)
+		if p.LengthSquared() < 1 {
+			return p
+		}
+	}
+}
 
 func (v Vec3) Add(u Vec3) Vec3 {
 	return Vec3{
