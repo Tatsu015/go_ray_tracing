@@ -18,8 +18,9 @@ var BLUE = vec.NewVec3(0.5, 0.7, 1)
 func rayColor(ray *raytrace.Ray, world *hittable.HittableList) vec.Vec3 {
 	rec := world.Hit(ray, 0, math.Inf(0))
 	if rec != nil {
-		offset := vec.NewVec3(1, 1, 1)
-		return rec.GetNormal().Add(offset).Times(0.5)
+		t := rec.GetPoint().Add(rec.GetNormal()).Add(vec.RandomInUnitSphere())
+		refRay := raytrace.NewRay(rec.GetPoint(), t.Sub(rec.GetPoint()))
+		return rayColor(&refRay, world).Times(0.5)
 	}
 
 	ud := &ray.Direction

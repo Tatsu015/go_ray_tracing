@@ -20,6 +20,10 @@ func (h *HitRecord) GetNormal() vec.Vec3 {
 	return h.normal
 }
 
+func (h *HitRecord) GetPoint() vec.Vec3 {
+	return h.p
+}
+
 func NewHitRecord(p vec.Point, normal vec.Vec3, t float64, frontFace bool) HitRecord {
 	return HitRecord{p, normal, t, frontFace}
 }
