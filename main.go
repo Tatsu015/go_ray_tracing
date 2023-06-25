@@ -15,12 +15,15 @@ import (
 var WHITE = vec.NewVec3(1, 1, 1)
 var BLUE = vec.NewVec3(0.5, 0.7, 1)
 
-func rayColor(ray *raytrace.Ray, world *hittable.HittableList) vec.Vec3 {
+func rayColor(ray *raytrace.Ray, world *hittable.HittableList, depth int) vec.Vec3 {
+	if depth <= 0 {
+		return vec.NewVec3(0, 0, 0)
+	}
 	rec := world.Hit(ray, 0, math.Inf(0))
 	if rec != nil {
 		t := rec.GetPoint().Add(rec.GetNormal()).Add(vec.RandomInUnitSphere())
 		refRay := raytrace.NewRay(rec.GetPoint(), t.Sub(rec.GetPoint()))
-		return rayColor(&refRay, world).Times(0.5)
+		return rayColor(&refRay, world, depth-1).Times(0.5)
 	}
 
 	ud := &ray.Direction
@@ -31,6 +34,7 @@ func rayColor(ray *raytrace.Ray, world *hittable.HittableList) vec.Vec3 {
 func main() {
 	const SAMPLE_PER_PIXCEL = 100
 	const ASPECT_RATIO = 16.0 / 9.0
+	const MAX_DEPTH = 50
 	var image_width = 100
 	var image_height = int(float64(image_width) / ASPECT_RATIO)
 	camera := raytrace.NewCamera(ASPECT_RATIO)
@@ -56,7 +60,7 @@ func main() {
 
 				r := camera.GetRay(u, v)
 
-				c := rayColor(&r, &world)
+				c := rayColor(&r, &world, MAX_DEPTH)
 				sum = sum.Add(c)
 			}
 			buf += ppm.WriteColor(sum, SAMPLE_PER_PIXCEL)
