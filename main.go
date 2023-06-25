@@ -32,7 +32,7 @@ func rayColor(ray *raytrace.Ray, world *hittable.HittableList, depth int) vec.Ve
 }
 
 func main() {
-	const SAMPLE_PER_PIXCEL = 100
+	const SAMPLE_PER_PIXCEL = 50
 	const ASPECT_RATIO = 16.0 / 9.0
 	const MAX_DEPTH = 50
 	var image_width = 100

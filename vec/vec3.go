@@ -84,6 +84,14 @@ func (v Vec3) Clamp(min float64, max float64) Vec3 {
 	}
 }
 
+func (v Vec3) Sqrt() Vec3 {
+	return Vec3{
+		X: math.Sqrt(v.X),
+		Y: math.Sqrt(v.Y),
+		Z: math.Sqrt(v.Z),
+	}
+}
+
 func (v Vec3) Dot(u Vec3) float64 {
 	return v.X*u.X + v.Y*u.Y + v.Z*u.Z
 }
