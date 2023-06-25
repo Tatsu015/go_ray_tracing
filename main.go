@@ -19,7 +19,7 @@ func rayColor(ray *raytrace.Ray, world *hittable.HittableList, depth int) vec.Ve
 	if depth <= 0 {
 		return vec.NewVec3(0, 0, 0)
 	}
-	rec := world.Hit(ray, 0, math.Inf(0))
+	rec := world.Hit(ray, 0.001, math.Inf(0))
 	if rec != nil {
 		t := rec.GetPoint().Add(rec.GetNormal()).Add(vec.RandomInUnitSphere())
 		refRay := raytrace.NewRay(rec.GetPoint(), t.Sub(rec.GetPoint()))
