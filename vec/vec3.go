@@ -27,6 +27,13 @@ func RandomVec3Inrange(min float64, max float64) Vec3 {
 	return NewVec3(rtmath.RandomDoubleInRange(min, max), rtmath.RandomDoubleInRange(min, max), rtmath.RandomDoubleInRange(min, max))
 }
 
+func RandomUnitVector() Vec3 {
+	a := rtmath.RandomDoubleInRange(0, 2*math.Pi)
+	z := rtmath.RandomDoubleInRange(-1, 1)
+	r := math.Sqrt((1 - z*z))
+	return NewVec3(r*math.Cos(a), r*math.Sin(a), z)
+}
+
 func RandomInUnitSphere() Vec3 {
 	for {
 		p := RandomVec3Inrange(-1, 1)

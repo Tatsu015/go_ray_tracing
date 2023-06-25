@@ -21,7 +21,7 @@ func rayColor(ray *raytrace.Ray, world *hittable.HittableList, depth int) vec.Ve
 	}
 	rec := world.Hit(ray, 0.001, math.Inf(0))
 	if rec != nil {
-		t := rec.GetPoint().Add(rec.GetNormal()).Add(vec.RandomInUnitSphere())
+		t := rec.GetPoint().Add(rec.GetNormal()).Add(vec.RandomUnitVector())
 		refRay := raytrace.NewRay(rec.GetPoint(), t.Sub(rec.GetPoint()))
 		return rayColor(&refRay, world, depth-1).Times(0.5)
 	}
