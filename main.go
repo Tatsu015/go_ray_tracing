@@ -21,7 +21,7 @@ func rayColor(ray *raytrace.Ray, world *hittable.HittableList, depth int) vec.Ve
 	}
 	rec := world.Hit(ray, 0.001, math.Inf(0))
 	if rec != nil {
-		t := rec.GetPoint().Add(rec.GetNormal()).Add(vec.RandomUnitVector())
+		t := rec.GetPoint().Add(vec.RandomInHemiSphere(rec.GetNormal()))
 		refRay := raytrace.NewRay(rec.GetPoint(), t.Sub(rec.GetPoint()))
 		return rayColor(&refRay, world, depth-1).Times(0.5)
 	}
@@ -35,7 +35,7 @@ func main() {
 	const SAMPLE_PER_PIXCEL = 50
 	const ASPECT_RATIO = 16.0 / 9.0
 	const MAX_DEPTH = 50
-	var image_width = 100
+	var image_width = 256
 	var image_height = int(float64(image_width) / ASPECT_RATIO)
 	camera := raytrace.NewCamera(ASPECT_RATIO)
 

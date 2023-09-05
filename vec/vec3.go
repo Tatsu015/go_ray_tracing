@@ -43,6 +43,15 @@ func RandomInUnitSphere() Vec3 {
 	}
 }
 
+func RandomInHemiSphere(normal Vec3) Vec3 {
+	us := RandomInUnitSphere()
+	if us.Dot(normal) > 0.0 {
+		return us
+	} else {
+		return us.Times(-1)
+	}
+}
+
 func (v Vec3) Add(u Vec3) Vec3 {
 	return Vec3{
 		X: u.X + v.X,
